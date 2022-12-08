@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Category = ({ item }) => {
+  console.log(item)
   return (
     <div className='flex-1 m-2 shadow-lg rounded-md overflow-hidden relative'>
       <img src={item.src} className='w-[100%]' alt='category_img' />

@@ -1,4 +1,4 @@
-import React from 'react'
+import { React } from 'react'
 import { CategoryApi } from '../api/CategoryApi'
 import Category from './Category'
 

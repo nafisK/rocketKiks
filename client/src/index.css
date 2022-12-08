@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .btn {
-  @apply text-white bg-[#0268FF] rounded-md shadow-md mt-[30px] p-3;
-} */
+.btn {
+  @apply text-white bg-[#0268FF] rounded-md shadow-md mt-[30px] p-3 hover:scale-[1.1] ease-in duration-100 cursor-pointer;
+}
 
 .product_img {
   @apply w-[80%] h-[80%] rounded-lg shadow-lg hover:scale-[1.1] ease-in duration-300;

@@ -1,6 +1,6 @@
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Slider.css'
 import { ApiSlides } from '../api/SliderApi'
 
