@@ -4,8 +4,41 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import NewsLetter from '../components/NewsLetter'
 import Counter from '../components/Counter'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
-const ProductPage = () => {
+const ProductPage = ({ setCart }) => {
+  const [product, setProduct] = useState(null)
+  const [quantity, setQuantity] = useState(1)
+  const [color, setColor] = useState('red')
+  const [size, setSize] = useState('M')
+
+  useEffect(() => {
+    const productId = window.location.pathname.split('/')[2]
+    const getProduct = async () => {
+      const res = await axios.get(`http://localhost:4000/product/${productId}`)
+      setProduct(res.data)
+    }
+    getProduct()
+    console.log(product)
+  }, [])
+
+  // handle add to cart button and add id, name, color, size, quantity, price, image to setCart
+  const handleAddToCart = () => {
+    setCart(prev => [
+      ...prev,
+      {
+        id: product.styleID,
+        name: product.shoeName,
+        color: color,
+        size: size,
+        quantity: quantity,
+        price: product.retailPrice,
+        image: product.thumbnail,
+      },
+    ])
+  }
+
   return (
     <div>
       <Announce />
@@ -13,24 +46,21 @@ const ProductPage = () => {
       <div className='flex justify-center mobile:flex-col mobile:mt-4 mobile:p-3'>
         <div className='flex-1 flex items-center justify-center'>
           <img
-            src='https://cdn.shopify.com/s/files/1/0240/7285/products/KNITPULLOVER-PISTACHIO-2_360x.jpg?v=1642545216'
+            src={product?.thumbnail}
             className='product_img'
             alt='product_image'
           />
         </div>
         <div className='flex-[1.3] flex flex-col items-start  justify-items-center mt-10 mobile:items-center'>
           <h1 className='title text-[40px] mobile:text-[30px]'>
-            Cream Hoody Orignal
+            {product?.shoeName}
           </h1>
           <p className='disription pr-[4rem] text-justify mt-4 mobile:pr-0'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium
-            accusamus, culpa neque ex sunt placeat. Vitae quia qui quo,
-            doloribus dolore aliquam veniam. Natus totam odit consequatur
-            consectetur delectus nihil!
+            {product?.description}
           </p>
           <div className='flex flex-col place-self-start'>
             <p className='mt-7 text-3xl'>
-              Price: <b>$70</b>
+              Price: $<b>{product?.retailPrice || '119.99'}</b>
             </p>
 
             <div className='colors flex mt-7 text-2xl'>
@@ -43,7 +73,7 @@ const ProductPage = () => {
             <div className='mt-7 text-2xl'>
               Size
               <select className='border-[2px] border-silver rounded-md ml-5'>
-                <option selected>Select</option>
+                <option defaultValue>Select</option>
                 <option>Small</option>
                 <option>Medium</option>
                 <option>Large</option>
@@ -51,11 +81,14 @@ const ProductPage = () => {
               </select>
             </div>
             <div className='mt-7'>
-              <Counter />
+              <Counter quantity={quantity} setQuantity={setQuantity} />
             </div>
           </div>
 
-          <button className='text-white bg-[#0268FF] rounded-md shadow-md mt-[30px] p-3'>
+          <button
+            className='text-white bg-[#0268FF] rounded-md shadow-md mt-[30px] p-3'
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </button>
         </div>

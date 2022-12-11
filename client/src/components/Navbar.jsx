@@ -1,17 +1,25 @@
 import React from 'react'
 import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const style =
     'text-[14px] cursor-pointer ml-[25px] mobile:ml-[5px] text-[#44546A]'
 
-  const handleRegister = () => {
-    console.log('Register')
-  }
+  const handleRegister = () => {}
 
   const handleSignIn = () => {
     console.log('Sign In')
+  }
+
+  const handleShoppingCart = () => {
+    navigate('/cart')
+  }
+
+  const handleLogo = () => {
+    navigate('/')
   }
 
   return (
@@ -34,7 +42,10 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className='center flex-1 text-center  mobile:ml-6'>
-          <div className='logo font-bold mobile:text-sm text-[#0268FF]'>
+          <div
+            className='logo font-bold mobile:text-sm text-[#0268FF] cursor-pointer'
+            onClick={handleLogo}
+          >
             ROCKET KIKS.
           </div>
         </div>
@@ -47,7 +58,7 @@ const Navbar = () => {
           <div className={style} onClick={handleSignIn}>
             Sign In
           </div>
-          <div className={style}>
+          <div className={style} onClick={handleShoppingCart}>
             <ShoppingCartCheckoutIcon></ShoppingCartCheckoutIcon>
           </div>
         </div>
