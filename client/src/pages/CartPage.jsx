@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import Cart from '../components/Cart'
 import CartTotal from '../components/CartTotal'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const CartPage = ({ cart, setCart }) => {
   const navigate = useNavigate()
