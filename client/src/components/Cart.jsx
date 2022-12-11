@@ -2,10 +2,7 @@ import React from 'react'
 import Counter from './Counter'
 
 function Cart({ item }) {
-  console.log(item)
   const ProductDivStyle = 'flex w-[100%] h-auto items-center mobile:flex-col'
-  const PriceQuantityStyle =
-    'flex-auto flex flex-col justify-center items-center mobile:mt-7 mobile:mb-7'
 
   return (
     <div>
@@ -23,22 +20,19 @@ function Cart({ item }) {
               <b className='mr-2'>Product:</b>
               {item.name}
             </p>
-            <p className='flex items-center justify-center'>
+            <div className='flex items-center justify-center'>
               <b className='mr-2'>Color:</b>
-              <div className=''>{item.color}</div>
-            </p>
+              <p className=''>{item.color}</p>
+            </div>
             <p>
               <b className='mr-2'>Size:</b>
               {item.size}
             </p>
+            <p>
+              <b className='mr-2'>Price:</b>
+              <b>${item.price}</b>
+            </p>
           </div>
-        </div>
-
-        {/*Price and Quantity Div*/}
-        <div className={PriceQuantityStyle}>
-          <p className='flex items-center justify-center text-4xl mt-3'>
-            <b>${item.price}</b>
-          </p>
         </div>
       </div>
       <hr className='my-7 mobile:mt-0 mr-50' />

@@ -30,7 +30,6 @@ const Product = ({ product, setCart }) => {
 
   // handle add to cart button and add id, name, color, size, quantity, price, image to setCart
   const handleAddToCart = () => {
-    console.log(product)
     setCart(prev => [
       ...prev,
       {

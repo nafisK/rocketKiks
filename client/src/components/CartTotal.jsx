@@ -1,22 +1,29 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 
 function CartTotal({ cart, setTotalPrice }) {
   const SummaryItemStyle = 'SummaryItem flex justify-between mt-3 w-[100%]'
+  const [subTotal, setSubTotal] = useState(0)
+  const [totalForComponent, setTotalForComponent] = useState(0)
 
-  // calculate total price from items in cart
-  const totalPrice = cart.reduce((acc, item) => {
-    return acc + item.price
-  }, 0)
-  console.log(totalPrice)
-
-  setTotalPrice(totalPrice + 15 - 10)
+  useEffect(() => {
+    let tempSubTotal = 0
+    cart.forEach(item => {
+      tempSubTotal += item.price * item.quantity
+    })
+    setSubTotal(tempSubTotal)
+    const tempTotal = tempSubTotal + 15 - 10
+    setTotalPrice(tempTotal)
+    setTotalForComponent(tempTotal)
+    console.log(tempSubTotal)
+    console.log()
+  }, [])
 
   return (
     <>
       <h1 className='text-[2rem]'>SUMMARY</h1>
       <div className={SummaryItemStyle}>
         <p>SubTotal:</p>
-        <p>${totalPrice}</p>
+        <p>${subTotal}</p>
       </div>
       <div className={SummaryItemStyle}>
         <p>Fixed Shipping Cost:</p>
@@ -28,7 +35,7 @@ function CartTotal({ cart, setTotalPrice }) {
       </div>
       <div className={SummaryItemStyle + ' text-3xl font-bold'}>
         <p>Total:</p>
-        <p>${totalPrice}</p>
+        <p>${totalForComponent}</p>
       </div>
     </>
   )

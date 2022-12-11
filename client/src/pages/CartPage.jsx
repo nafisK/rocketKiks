@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 import Cart from '../components/Cart'
 import CartTotal from '../components/CartTotal'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import StripeCheckout from 'react-stripe-checkout'
 
 const CartPage = ({ cart, setCart }) => {
   const navigate = useNavigate()
@@ -23,9 +23,11 @@ const CartPage = ({ cart, setCart }) => {
     navigate('/')
   }
 
-  // handle checkout now button
-  const handleCheckoutNow = () => {
-    navigate('/checkout')
+  const onToken = token => {
+    // clear cart
+    setCart([])
+    // redirect to home page
+    navigate('/')
   }
 
   return (
@@ -45,28 +47,32 @@ const CartPage = ({ cart, setCart }) => {
           </button>
           <div className='flex underline text-lg hover:cursor-pointer mobile:m-5'>
             <p>Items in your Cart: {cart.length}</p>
-            <p className='ml-5'>Whishlist Items: 0</p>
+            <p className='ml-5'>Wishlist Items: 0</p>
           </div>
-          <button className='btn mt-0' onClick={handleCheckoutNow}>
-            Checkout Now
-          </button>
+          <div className='btn mt-0'>
+            <StripeCheckout
+              token={onToken}
+              name='Rocket Kicks'
+              amount={totalPrice * 100}
+              currency='USD'
+              allowRememberMe={true}
+              stripeKey='pk_test_51LTB39DoJ4j7RRSuj1mCGcoh1X6vrmunCik8xu87NLasr6LDqArCW2U1kFwUquJUfm7NikFcjBp0mhu3MSgKH1wa00S2QSwGJZ'
+            />{' '}
+          </div>
+          {/* Stripe Integration */}
         </div>
 
         {/* vertically center parent div */}
         <div className='flex flex-row mt-7 mobile:flex-col'>
           {/* product div */}
           <div className='flex flex-col flex-1'>
-            {cart.map(item => (
-              <Cart item={item} />
+            {cart.map((item, index) => (
+              <Cart item={item} key={index} />
             ))}
           </div>
 
           <div className='Summary flex-[0.4] flex flex-col items-center w-auto h-[40vh] border-2 border-[#8a4af3] rounded-md shadow-lg p-5 text-lg mobile:mb-6'>
-            <CartTotal
-              cart={cart}
-              setTotalPrice={setTotalPrice}
-              totalPrice={totalPrice}
-            />
+            <CartTotal cart={cart} setTotalPrice={setTotalPrice} />
           </div>
         </div>
       </div>
